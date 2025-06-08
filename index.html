@@ -3,9 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>news_ranking</title>
+
 </head>
 <body>
-    
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Top Trending News</h1>
+                </div>
+                <nav class="nav">
+                    <div class="nav-controls">
+                        <div class="category-selector">
+                            <label for="category">Category:</label>
+                            <select id="category" class="select-input">
+                                <option value="general">Overall News</option>
+                                <option value="business">Business News</option>
+                                <option value="entertainment">Entertainment News</option>
+                                <option value="health">Health News</option>
+                                <option value="science">Science News</option>
+                                <option value="sports">Sports News</option>
+                                <option value="technology">Technology News</option>
+                            </select>
+                        </div>
+                        <div class="limit-selector">
+                            <label for="limit">Ranking:</label>
+                            <select id="limit" class="select-input">
+                                <option value="3" selected>Top 3</option>
+                                <option value="5">Top 5</option>
+                                <option value="10">Top 10</option>
+                                <option value="20">Top 20</option>
+                            </select>
+                        </div>
+                        <button id="refresh-btn" class="refresh-btn">
+                            Refresh!
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="hero-section">
+                <h2>Latest Trending News</h2>
+                <p id="news-info" class="news-info">Loading latest news...</p>
+            </div>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Fetching latest news...</p>
+            </div>
+            
+            <div id="error-message" class="error-message" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Error loading news. Please try again.</p>
+            </div>
+            
+            <div id="news-container" class="news-container">
+                <!-- News Articles -->
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/script.js"></script>
 </body>
 </html>
