@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Trending News</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <h1 class="logo" style="background-color: burlywood;">Top Trending News</h1>
+            <nav class="nav-controls">
+                <label>Category:
+                    <select id="category" class="select-input">
+                        <option value="general">General</option>
+                        <option value="business">Business</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="health">Health</option>
+                        <option value="science">Science</option>
+                        <option value="sports">Sports</option>
+                        <option value="technology">Technology</option>
+                    </select>
+                </label>
+                <label>Ranking:
+                    <select id="limit" class="select-input">
+                        <option value="3" selected>Top 3</option>
+                        <option value="5">Top 5</option>
+                        <option value="10">Top 10</option>
+                        
+                    </select>
+                </label>
+                <button id="refresh-btn" class="refresh-btn">Refresh!</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main container">
+        <section class="hero-section">
+            <h2>Latest Trending News</h2>
+            <p id="news-info" class="news-info">Loading latest news...</p>
+        </section>
+        
+        <div id="error-message" class="error-message" style="display: none;">
+            <p>Error loading news. Please try again.</p>
+        </div>
+        <div id="news-container" class="news-container"></div>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
