@@ -8,7 +8,7 @@ from typing import Optional
 from news_service import NewsService
 from llm_agents import NewsLLMAgent
 
-app = FastAPI(title="Trending News Website")
+app = FastAPI()
 
 # cors - fronted
 app.add_middleware(
