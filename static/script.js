@@ -7,7 +7,7 @@ class NewsApp {
         this.initElements();
         this.bindEvents();
         this.loadNews();
-        // Auto-refresh 
+        // Autorefresh 
         setInterval(() => !this.isLoading && this.loadNews(false, true), 300000);
     }
 
