@@ -167,39 +167,3 @@ body {
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(255, 99, 71, 0.1);
 }
-
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .nav-controls {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .logo {
-    margin-bottom: 1rem;
-  }
-
-  .news-container {
-    grid-template-columns: 1fr;
-    padding: 0;
-  }
-
-  .news-article {
-    max-width: 90%;
-    margin: 0 auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-section h2 {
-    font-size: 1.5rem;
-  }
-
-  .news-info {
-    font-size: 0.9rem;
-  }
-}
