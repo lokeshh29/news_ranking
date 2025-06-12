@@ -23,7 +23,7 @@ body {
   padding: 0.8rem 1rem;
   border-bottom: 1px solid lightgray;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  position: sticky;
+  position:sticky;
   top: 0;
   z-index: 10;
   border-radius: 0 0 10px 10px;
@@ -34,7 +34,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1rem; 
 }
 
 .logo {
@@ -126,7 +126,7 @@ body {
 }
 
 .news-article:hover {
-  transform: translateY(-8px);
+  transform: translateY(-36px);
   box-shadow: 0 10px 20px rgba(70, 130, 180, 0.2);
 }
 

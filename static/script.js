@@ -66,31 +66,23 @@ class NewsApp {
         this.newsContainer.innerHTML = articles.map(this.articleHTML.bind(this)).join('');
         this.newsContainer.style.display = 'grid';
     }
-
-    articleHTML(article) {
-        const escape = text => {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        };
-
-        return `
-        <div class="news-article">
-            ${article.image ? `<img src="${article.image}" class="article-image" onerror="this.style.display='none'">` : ''}
-            <div class="article-content">
-                <h3 class="article-title">${escape(article.title)}</h3>
-                <p class="article-description">${escape(article.description || '')}</p>
-                ${article.enhanced_summary ? `<p><strong>AI Summary:</strong> ${escape(article.enhanced_summary)}</p>` : ''}
-                ${article.key_topics?.map(topic => `<span class="topic-tag">${escape(topic)}</span>`).join('') || ''}
-                <div class="article-meta">
-                    ${article.source?.name ? `<span class="article-source">${escape(article.source.name)}</span>` : ''}
-                    ${article.publishedAt ? `<span class="article-date">${this.formatDate(article.publishedAt)}</span>` : ''}
-                </div>
-                ${article.url ? `<a href="${article.url}" target="_blank" class="read-more-btn">Read Full Article</a>` : ''}
+articleHTML(article) {
+    return `
+    <div class="news-article">
+        ${article.image ? `<img src="${article.image}" class="article-image" onerror="this.style.display='none'">` : ''}
+        <div class="article-content">
+            <h3 class="article-title">${article.title}</h3>
+            <p class="article-description">${article.description || ''}</p>
+            ${article.enhanced_summary ? `<p><strong>AI Summary:</strong> ${article.enhanced_summary}</p>` : ''}
+            ${article.key_topics?.map(topic => `<span class="topic-tag">${topic}</span>`).join('') || ''}
+            <div class="article-meta">
+                ${article.source?.name ? `<span class="article-source">${article.source.name}</span>` : ''}
+                ${article.publishedAt ? `<span class="article-date">${this.formatDate(article.publishedAt)}</span>` : ''}
             </div>
-        </div>`;
-    }
-
+            ${article.url ? `<a href="${article.url}" target="_blank" class="read-more-btn">Read Full Article</a>` : ''}
+        </div>
+    </div>`;
+}
     formatDate(dateString) {
         const date = new Date(dateString);
         return isNaN(date.getTime()) ? dateString : date.toLocaleString();
