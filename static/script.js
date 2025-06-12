@@ -73,10 +73,7 @@ articleHTML(article) {
         <div class="article-content">
             <h3 class="article-title">${article.title}</h3>
             <p class="article-description">${article.description || ''}</p>
-            ${article.enhanced_summary ? `<p><strong>AI Summary:</strong> ${article.enhanced_summary}</p>` : ''}
-            ${article.key_topics?.map(topic => `<span class="topic-tag">${topic}</span>`).join('') || ''}
             <div class="article-meta">
-                ${article.source?.name ? `<span class="article-source">${article.source.name}</span>` : ''}
                 ${article.publishedAt ? `<span class="article-date">${this.formatDate(article.publishedAt)}</span>` : ''}
             </div>
             ${article.url ? `<a href="${article.url}" target="_blank" class="read-more-btn">Read Full Article</a>` : ''}
@@ -90,23 +87,14 @@ articleHTML(article) {
 
     getCategoryName(category) {
         return {
-            general: 'Trending',
+            general: 'OverAll',
             business: 'Business',
             entertainment: 'Entertainment',
             health: 'Health',
             science: 'Science',
             sports: 'Sports',
             technology: 'Technology'
-        }[category] || category;
-    }
-
-    showError(message) {
-        this.clearMessages();
-        if (this.error) {
-            this.error.style.display = 'block';
-            const paragraph = this.error.querySelector('p');
-            if (paragraph) paragraph.textContent = `Error: ${message}`;
-        }
+        }[category]
     }
 
     showNoNews() {
