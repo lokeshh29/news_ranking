@@ -87,9 +87,3 @@ class NewsLLMAgent:
         if "```" in text:
             text = text.split("```")[1].strip()
         return text
-
-    def _safe_json(self, txt):
-        try:
-            return json.loads(txt)
-        except:
-            return {}
