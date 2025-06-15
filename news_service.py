@@ -14,7 +14,7 @@ class NewsService:
             "max": min(limit, 100),
             "sortby": "publishedAt"
         }
-        if category and category.lower() != "general":
+        if category != "general":
             params["category"] = category
 
         url = f"{self.base_url}/top-headlines"
