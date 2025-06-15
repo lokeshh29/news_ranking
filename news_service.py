@@ -14,10 +14,11 @@ class NewsService:
             "max": min(limit, 100),
             "sortby": "publishedAt"
         }
-        if category != "general":
-            params["category"] = category
-
-        url = f"{self.base_url}/top-headlines"
+        if category and category != "general":
+            url = f"{self.base_url}/search"
+            params["q"] = category
+        else:
+            url = f"{self.base_url}/top-headlines"
 
         async with aiohttp.ClientSession() as session:
             async with session.get(url, params=params) as response:

@@ -4,10 +4,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from typing import Optional
+
 from news_service import NewsService
-from llm_agents import NewsLLMAgent  
+from llm_agents import NewsLLMAgent
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,7 +22,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 news_service = NewsService()
-llm_agent = NewsLLMAgent() 
+llm_agent = NewsLLMAgent()
 
 @app.get("/")
 def home(request: Request):
@@ -32,9 +34,7 @@ async def get_news(category: Optional[str] = "general", limit: int = 10):
         limit = 10
     try:
         raw_news = await news_service.get_trending_news(category=category, limit=limit)
-        
         enhanced_news = [llm_agent.enhance(article) for article in raw_news]
-
         return {
             "articles": enhanced_news,
             "category": category,

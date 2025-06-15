@@ -21,19 +21,24 @@ class NewsApp {
     bindEvents() {
         this.categorySelect.onchange = () => {
             this.currentCategory = this.categorySelect.value;
+            console.log("Category changed to:", this.currentCategory);
             this.loadNews();
         };
 
         this.limitSelect.onchange = () => {
-            this.currentLimit = +(this.limitSelect.value);
+            this.currentLimit = Number(this.limitSelect.value);
+            console.log("Limit changed to:", this.currentLimit);
             this.loadNews();
         };
 
-        this.refreshBtn.onclick = () => this.loadNews();
+        this.refreshBtn.onclick = () => {
+            console.log("Manual refresh triggered");
+            this.loadNews();
+        };
     }
 
     async loadNews() {
-        if (this.isLoading == true) return;
+        if (this.isLoading) return;
 
         this.isLoading = true;
 
@@ -41,37 +46,37 @@ class NewsApp {
         this.newsInfo.textContent = 'Loading news...';
 
         try {
-            const res = await fetch(`/api/news?category=${this.currentCategory}&limit=${this.currentLimit}`);
-            const data = await res.json();
+            const response = await fetch(`/api/news?category=${this.currentCategory}&limit=${this.currentLimit}`);
+            const data = await response.json();
+            console.log("API Response:", data);
 
-            if (data.articles?.length) {
+            if (data.articles && data.articles.length > 0) {
                 this.renderNews(data.articles);
                 this.newsInfo.textContent = `Showing ${data.count} ${this.getCategoryName(data.category)} articles`;
             } else {
                 this.newsInfo.textContent = 'No news articles found.';
             }
-        } catch (err) {
+        } catch (error) {
+            console.error("Error loading news:", error);
             this.error.style.display = 'block';
             this.error.textContent = 'Failed to load news.';
         } finally {
-
+            this.isLoading = false;
         }
     }
 
     renderNews(articles) {
-        this.newsContainer.innerHTML = articles.map(article => {
-            return `
-                <div class="news-article">
-                    ${article.image ? `<img src="${article.image}" class="article-image" onerror="this.style.display='none'">` : ''}
-                    <div class="article-content">
-                        <h3>${article.title}</h3>
-                        <p>${article.description}</p>
-                        <p><small>${this.formatDate(article.publishedAt)}</small></p>
-                        <a href="${article.url}" target="_blank">Read Full Article</a>
-                    </div>
+        this.newsContainer.innerHTML = articles.map(article => `
+            <div class="news-article">
+                ${article.image ? `<img src="${article.image}" class="article-image" onerror="this.style.display='none'">` : ''}
+                <div class="article-content">
+                    <h3>${article.title}</h3>
+                    <p>${article.description}</p>
+                    <p><small>${this.formatDate(article.publishedAt)}</small></p>
+                    <a href="${article.url}" target="_blank">Read Full Article</a>
                 </div>
-            `;
-        }).join('');
+            </div>
+        `).join('');
         this.newsContainer.style.display = 'grid';
     }
 
@@ -81,7 +86,7 @@ class NewsApp {
     }
 
     getCategoryName(category) {
-        return {
+        const names = {
             general: 'OverAll',
             business: 'Business',
             entertainment: 'Entertainment',
@@ -89,7 +94,8 @@ class NewsApp {
             science: 'Science',
             sports: 'Sports',
             technology: 'Technology'
-        }[category] || 'General';
+        };
+        return names[category] || 'General';
     }
 
     clearMessages() {
