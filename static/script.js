@@ -25,7 +25,7 @@ class NewsApp {
         };
 
         this.limitSelect.onchange = () => {
-            this.currentLimit = parseInt(this.limitSelect.value);
+            this.currentLimit = +(this.limitSelect.value);
             this.loadNews();
         };
 
@@ -33,12 +33,12 @@ class NewsApp {
     }
 
     async loadNews() {
-        if (this.isLoading) return;
+        if (this.isLoading == true) return;
+
         this.isLoading = true;
 
         this.clearMessages();
         this.newsInfo.textContent = 'Loading news...';
-        this.refreshBtn.classList.add('loading');
 
         try {
             const res = await fetch(`/api/news?category=${this.currentCategory}&limit=${this.currentLimit}`);
@@ -54,8 +54,7 @@ class NewsApp {
             this.error.style.display = 'block';
             this.error.textContent = 'Failed to load news.';
         } finally {
-            this.isLoading = false;
-            this.refreshBtn.classList.remove('loading');
+
         }
     }
 
