@@ -1,6 +1,7 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+import logging
 
 llm = ChatGoogleGenerativeAI(model="models/chat-bison-001", google_api_key="AIzaSyDFKJGHipveJt_s_ZDOrnn1PdJj2VlQAQ")
 
@@ -24,3 +25,4 @@ class NewsLLMAgent:
         except Exception as e:
             article["summary"] = "LLM summarization failed"
         return article
+
