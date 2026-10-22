@@ -1,9 +1,10 @@
+import os
 import aiohttp
 from typing import List, Dict, Optional
 
 class NewsService:
     def __init__(self):
-        self.api_key = "b43960956c7072d1e72ae1120f769830"
+        self.api_key = os.getenv("GNEWS_API_KEY", "b43960956c7072d1e72ae1120f769830")
         self.base_url = "https://gnews.io/api/v4"
 
     async def get_trending_news(self, category: Optional[str] = None, limit: int = 10) -> List[Dict]:

@@ -1,15 +1,23 @@
+import os
+
+try:
+    from langchain_core.prompts import PromptTemplate
+except ImportError:
+    from langchain.prompts import PromptTemplate
+
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 
-llm = ChatGoogleGenerativeAI(model="models/chat-bison-001", google_api_key="AIzaSyDFKJGHipveJt_s_ZDOrnn1PdJj2VlQAQ")
+api_key = os.getenv("GEMINI_API_KEY", "")
 
-prompt = PromptTemplate(
-    input_variables=["title", "description"],
-    template="Summarize this news article briefly:\n\nTitle: {title}\n\nDescription: {description}"
-)
-
-summarizer_chain = LLMChain(llm=llm, prompt=prompt)
+try:
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=api_key) if api_key else None
+    prompt = PromptTemplate(
+        input_variables=["title", "description"],
+        template="Summarize this news article briefly:\n\nTitle: {title}\n\nDescription: {description}"
+    )
+    summarizer_chain = prompt | llm if llm else None
+except Exception:
+    summarizer_chain = None
 
 class NewsLLMAgent:
     def enhance(self, article: dict) -> dict:
@@ -18,9 +26,17 @@ class NewsLLMAgent:
         if not title and not description:
             article["summary"] = "No summary available"
             return article
+        if not summarizer_chain:
+            article["summary"] = description or "No summary available"
+            return article
         try:
-            summary = summarizer_chain.run(title=title, description=description)
+            if hasattr(summarizer_chain, "invoke"):
+                result = summarizer_chain.invoke({"title": title, "description": description})
+                summary = result.content if hasattr(result, "content") else str(result)
+            else:
+                summary = summarizer_chain.run(title=title, description=description)
             article["summary"] = summary.strip()
-        except Exception as e:
-            article["summary"] = "LLM summarization failed"
+        except Exception:
+            article["summary"] = description or "LLM summarization failed"
         return article
+

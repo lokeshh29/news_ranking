@@ -5,6 +5,11 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from typing import Optional
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from news_service import NewsService
 from llm_agents import NewsLLMAgent
 
@@ -46,3 +51,8 @@ async def get_news(category: Optional[str] = "general", limit: int = 10):
 @app.get("/api/health")
 async def health_check():
     return {"status": "healthy", "service": "trending-news-api"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
