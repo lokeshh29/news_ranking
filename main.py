@@ -31,7 +31,7 @@ llm_agent = NewsLLMAgent()
 
 @app.get("/")
 def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request=request, name="index.html")
 
 @app.get("/api/news")
 async def get_news(category: Optional[str] = "general", limit: int = 10):
